@@ -1,0 +1,61 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/aria">next</a>
+    </nav>
+    <header>
+      <span>Nav</span>
+      <nav aria-label="Site">
+        <ul role="navigation">
+          <li>
+            <a href="/products">products</a>
+          </li>
+          <li>
+            <a href="/more">more</a>
+          </li>
+          <li>
+            <a href="/about">about</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <nav aria-labelledby="bc-label">
+        <span id="bc-label" hidden></span>
+        <!-- for breadcrumb user ordered list -->
+        <ol>
+          <li>
+            <a href="/home">home</a>
+          </li>
+          <li>
+            <a href="/products">products</a>
+          </li>
+          <li>
+            <a href="/kittens">kittens</a>
+          </li>
+        </ol>
+      </nav>
+      <h1>Page title</h1>
+    </main>
+    <style>
+      a {
+        text-decoration: underline;
+        &[aria-current="page"] {
+          text-decoration: none;
+        }
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/hiding">next</a>
+    </nav>
+    <h1>Acc Name</h1>
+
+    name !== label ??
+
+    <pre>
+		asdas
+
+	</pre>
+
+    <fieldset>
+      <legend> address </legend>
+
+      <label for="street">street</label>
+      <input type="text" name="street" id="street" />
+      ...
+    </fieldset>
+
+    <!--   this is invalid! -->
+    <span aria-label="NOPE"></span>
+
+    <pre>
+		- description
+		- labelled-by
+		nice to reuse button if it has same label
+		 e.g. input + search button
+
+		 aria-labelledby &gt; aria-label
+		 - use element if it exists
+		 - better for translations
+		 - label has to = name , or screen control cant click the link
+		 dont use it for descriptions
+
+		  <a href="#" aria-label="mor einfo">rules</a>
+		  <!-- here rules is read twice, once as name, then as  el -->
+		  <button>
+			<span class="sronly">rules</span>
+			<i />
+		  </button>
+
+		  <!-- btter like this -->
+		   <button aria-labelledby="lab">
+			 <span id="lab" hidden>rules</span>
+			 <i />
+		   </button>
+	</pre>
+    <h2>description</h2>
+
+    <h2>same name</h2>
+	<pre>
+		different buttons shouldnt have the same name
+		ios can show all buttons, shitty if 10 = "add to cart"
+
+		voice activation SW users say "click NAME" to click links / buttons.
+		if it doesnt find matching it will highlight all that START with what user said.
+		as they cant se SR Only text, they say "add to cart" and it still works
+	</pre>
+	<button>
+		add to cart
+		<span class="sronly">, item abc</span>
+	</button>
+
+	 
+	
+  </body>
+</html>

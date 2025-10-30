@@ -1,0 +1,81 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/hiding">next</a>
+    </nav>
+    <main>
+      <h1>disclosure</h1>
+      <a
+        href="https://cdpn.io/pen/debug/poZLeMj/4d2f146b15735f13bd1f33628078e89f"
+        >demo</a
+      >
+
+      <h2>native details element</h2>
+      <pre>
+        native &lt;details element can be announced as button, summary or disclosure triangle.
+           - removing trianlge maeans some SR dont tell opened state anymore 
+        </pre>
+
+      <h2>custom</h2>
+      <pre>
+            we need a button and a contianer w contents
+            - can hide svg because we have aria-expanded
+            - use 'hidden' attr
+            - or use button[aria-expanded="true"] in css
+        </pre>
+
+      <button aria-expanded="false" aria-controls="cont">
+        <svg width="20" height="20" aria-hidden="true"></svg>
+        label
+      </button>
+      <div id="cont" hidden="until-found">lorem ipsum</div>
+      <pre>
+            progressive enhancements - add 'hidden' only in js, so by default its visible
+        </pre>
+
+      <h2>Accordion</h2>
+      <pre>
+            is a group of detail tags, but can be exclusive, so only 1 open at a time
+            we can use a series of details tags, but need to group them, w a named group or a landmark  
+            -  group : role="group" 
+            - landmakr region : a section w accessible name becomes role="region"
+            basically if you want it as landmark or not
+
+            acc name: 
+            - needs acc name, aria-label is last choice
+            - visually hidden is announced twice , hence hidden is a bit better
+        </pre>
+
+      <div role="group" aria-labelledby="grh" aria-label="heading">
+        <h2 id="grh">heading</h2>
+        <span id="grh" class="visuallyhidden">heading</span>
+        <span id="grh" hidden>heading</span>
+
+        <details name="faq">
+          <summary>about</summary>
+          <p>how about</p>
+        </details>
+        <details name="faq">
+          <summary>products</summary>
+          <p>all the products abc</p>
+        </details>
+      </div>
+
+      <pre>
+        but cant have headings inside details tag, as its a button, it supressed roles inside 
+        if we want our accordion parts to be headings then we use custom accordion widget as coded above, with buttons INSIDE hEADINGS.  
+      </pre>
+    </main>
+  </body>
+</html>

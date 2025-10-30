@@ -1,0 +1,85 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/disclosure">next</a>
+    </nav>
+    <h1>ARIA</h1>
+    <h2>ARIA is a polyfill for semantics</h2>
+    <p>web accessibility initiative - accessibile rich internet applications</p>
+
+    <a href="https://www.w3.org/TR/wai-aria-1.1/">aria spec</a>
+
+    <p>
+      aria - role : what is it <br />
+      - state - respond to user ix <br />
+      - properties - describe , current vlaue, relationship to other el
+    </p>
+
+    <div role="tablist">
+      <button role="tab">main</button>
+      <button role="tab">other</button>
+    </div>
+    <section role="tabpanel">[ tab dontent here ]</section>
+
+    <h2>aria roles</h2>
+    <a href="https://www.w3.org/TR/wai-aria-1.1/#usage_intro">aria-roles</a>
+    <p>
+      - widget roles : tabs switches menus etc - live region roles - window
+      roles , e.g. dialogs
+    </p>
+    <h2>aria states</h2>
+    <a href="https://www.w3.org/TR/wai-aria-1.1/#introstates"> docs</a>
+    <button aria-pressed="true">dark mode</button>
+    <button aria-expanded="false" aria-controls="menu">menu</button>
+    <div id="menu">[...]</div>
+
+    <p>
+      aria requires js by default for itneravtivity. so best progressive
+      enhancements, aria attr only present if js is working
+    </p>
+
+    <p>
+      <ul>
+        <li>not all roles are allowed on all elements</li>
+        <li>some only allowed as child of others, eg tablist &lt; tab</li>
+        <li>
+          role : button - erase semantics of children! cant have headings in
+          button, or in dialog i think
+        </li>
+      </ul>
+    </p>
+
+    <h2>ARIA rules</h2>
+    <p style="whitespace:pre;">
+      <pre>
+
+        1. use semantic html over aria first if you can, only use if doesnt exist or cant style w css
+        2.  do not change native semantics unless you have to 
+        - dont turn h2 into tab, put button inside h2 
+        - but you can use a similar semantic element as "fallback"
+        3. all aria ctrls must be usable w keyboard 
+        4. on focusable element, doint use role="presentation" or aria-hidden="true"
+        5. all intgeractive elemenmts must have an accessible name
+      </pre>
+    </p>
+
+    <h2>APG - authoring practicews guide</h2>
+    <a href="https://www.w3.org/WAI/ARIA/apg/patterns/">apg link</a>
+    <pre>
+      its not copy paste
+      doesnt guarantee compliance
+      still need to test and develop
+    </pre>
+  </body>
+</html>
