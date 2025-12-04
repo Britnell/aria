@@ -1,0 +1,131 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/live">next</a>
+    </nav>
+    <main>
+      <h2>Forms</h2>
+
+
+      <input type="text" minlength="3" max="10" />
+      <input type="number" min="0" max="100" />
+
+      <style>
+      input:invalid , input[aria-invalid="true"] {
+        color: red;
+      }
+      </style>
+
+
+      <h3>avoid browsers form validation</h3>
+      <p>browser error checking messages arent great.
+        also they are hard to read</p>
+      <p>disable native validation w </p>
+      <form novalidate>
+        <p>or on button</p>
+        <button type="submit" formnovalidate>Submit</button>
+      </form>
+
+      <h3>Required fields</h3>
+      <pre> 
+        marker isnt acessible.
+        only marking required means you first need to see requried to figure out others are optional.
+        so better to mark optional fields.
+        i like just marking optional fields only.
+        - best add (required) / (optional) to label
+        - avoid using * to mark require fields
+        - if have to use *, put explanation at the top . 
+        - hide * from SR 'aria-hidden'
+        - tell SR its required with 'required' / 'aria-required'
+        - if required browser announces as 'invalid' by default 
+        - use aria-valid="false" to override 
+        - when invalid, add logo so not only colour
+      </pre>
+      <label>Email (required)</label>
+      <input type="email"
+        required="true"
+        aria-invalid="false"
+      >
+
+      <input type="email"
+        aria-required="true"
+        aria-invalid="true"
+        aria-describedby="email-error"
+      >
+      <pre>
+        'aria-errormessage' isn't really there yet.
+      </pre>
+
+
+
+      <h3>radio button</h3>
+      <pre>
+        marking each radio as required is confusing, instead mark group required  
+      </pre>
+      <fieldset role="radiogroup" aria-required="true">
+       <legend>Your favourite colour</legend> 
+        <label for="">
+          <input type="radio" name="color" value="red" > 
+          red
+        </label>
+      </fieldset>
+      
+
+      <h3>hints</h3>
+      <pre>
+        longer info associated with 'aria-describedby'
+      </pre>
+
+      <h3>DONT DISABLE SUBMIT BUTTON</h3>
+      <h3>inputtype</h3>
+      <a href="https://better-mobile-inputs.netlify.app/">better inputs tool</a>
+      <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation">mdn - form Form_validation</a>
+
+      <h3>error messages</h3>
+      <pre>
+        best way is to have a list of errors at the top. 
+        this cvan be live region or moving focus.
+        if it has interactive elements than not a live region 
+      </pre>
+
+      <div role="group" aria-labelledby="err-title" >
+      <h3 id="err-title" tabindex="-1">there were 2 errors</h3>
+        <ul>
+          <li>
+            <a href="#tel">pelase proivide a valid phone number</a>
+          </li>
+        </ul>
+      </div>
+
+      <label for="tel"></label>
+      <input id="tel" aria-invalid="true" aria-describedby="tel-err tel-instr" >
+      <p id="ip-err">you didnt...</p>
+      <p id="ip-instr">provide area code</p>
+      <a href="https://design-system.service.gov.uk/components/error-summary/">ref uk.gov form errors</a>
+
+      <h3>inline validation</h3>
+      <a href="https://alistapart.com/article/inline-validation-in-web-forms/">inline validation</a>
+
+      <pre>
+
+        if added dynamically while focus is on field they are not read out.
+        each err msg needs to be a live region, so SR will read it asap.
+      </pre>
+      <input type="password" aria-required="true" aria-invalid="true" aria-describedby="errmsg">
+      <p id="errmsg" aria-live="assertive">please add a capital letter</p>
+    </main>
+
+
+  </body>
+</html>

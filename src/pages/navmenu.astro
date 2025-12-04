@@ -1,0 +1,190 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/navmob">next</a>
+    </nav>
+    <main>
+      <h1>nav menubar</h1>
+
+      <a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/examples/menubar-nvavigation/">apg menubar example</a>
+
+      <style>
+        button[aria-expanded="true"] svg {
+          transform: rotate(90deg);
+          transform-origin: bottom;
+      }
+      .exp-ctrl {
+        display: none;
+      }
+      </style>
+
+      <nav aria-labelledby="navlabel">
+        <span hidden id="navlabel">Site</span>
+  
+        <ul>
+          <li>
+            <button aria-expanded="false" aria-controls="prod-exp">
+              products
+              <svg width="1em" height="1em" viewBox="0 0 20 20" aria-hidden="true">
+                <text x="0" y="20" font-size="16" font-family="Arial" fill="black">
+                  &lt; 
+                </text>
+              </svg>
+              </button>
+            <ul class="exp-ctrl" id="prod-exp"  >
+              <li><a href="#a">aaa</a></li>
+              <li><a href="#b">bbb</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#about">about</a>
+          </li>
+        </ul>
+      </nav>
+
+      <script>
+      const expands = document.querySelectorAll('nav [aria-expanded]')
+      for(let el of expands){
+        el.addEventListener('click',onclick)
+
+        const ctrlid = el.getAttribute('aria-controls')
+        const ctrls = document.getElementById(ctrlid)
+
+
+         const list = ctrls?.querySelectorAll('button, a')
+         const last = list[list?.length-1]
+        const first = list[0]
+          
+        if(first){
+          first.addEventListener('keydown',closeon_tab)
+        }
+         if(last){
+             last.addEventListener('keydown',closeontab)
+         }
+        function closeon_tab(ev){
+          if(ev.key==='Tab' && ev.shiftKey){
+           console.log(ev)
+           el.setAttribute('aria-expanded','false')
+           ctrls.style.display = 'none'
+          }
+        }
+         function closeontab(ev){
+           if(ev.key==='Tab' && !ev.shiftKey) {
+             el.setAttribute('aria-expanded','false')
+             ctrls.style.display = 'none'
+           }
+         }
+
+
+
+        function onclick(ev){
+          const el = ev.currentTarget
+          const state = el.getAttribute('aria-expanded')
+          const next = state === 'true' ? false : true
+          el.setAttribute('aria-expanded',next)
+          if(!ctrls) return
+        
+         ctrls.style.display = next ? 'block': 'none';
+        }
+      }
+      
+      window.addEventListener('click',clickOutside)
+      window.addEventListener('keydown',closeEsc)
+
+      function closeEsc(ev){
+        if(ev.key!=='Escape') return;
+    
+        const aria = document.querySelector('[aria-expanded="true"]')
+        if(!aria) return;
+
+        const ctrlsid = aria.getAttribute('aria-controls')
+        if(!ctrlsid) return;
+        const ctrls = document.getElementById(ctrlsid)
+        if(!ctrls) return
+
+        aria.setAttribute('aria-expanded','false')
+        aria.focus()
+        ctrls.style.display = 'none'
+      }
+
+
+      function clickOutside(ev){
+        const aria = document.querySelector('[aria-expanded="true"]')
+        const target = ev.target
+
+        if(!aria) return;
+        if(target===aria || aria.contains(target)) return ;
+
+        const ctrlsid = aria.getAttribute('aria-controls')
+        if(!ctrlsid) return;
+        const ctrls = document.getElementById(ctrlsid)
+        if(!ctrls) return
+        const inside = ctrls.contains(target)
+        // const insideAria = target.closest('[aria-expanded')
+
+        if(inside) return;
+        
+        aria.setAttribute('aria-expanded','false')
+        ctrls.style.display = 'none'
+        
+        //
+      }
+
+
+      </script>
+    </main>
+    <style>
+      a {
+        text-decoration: underline;
+        &[aria-current="page"] {
+          text-decoration: none;
+        }
+      }
+
+    #prod-exp {
+      position: absolute;
+      padding: .5rem;
+    background: #eee;
+    border: 1px solid black;
+    }
+    </style>
+
+
+    <article>
+      <pre>
+        similarly for mobile slide-out nav menu, HOWEVER
+
+        1. dont hide the nav, so landmark still available, keep button + contents inside nav
+
+        2. hide menu 
+        - if sliding it in, just hiding with position, make sure to hide from a11y, by hiding or inert attr
+
+        3. hide background, its visually hidden so hide from SR / keyboard user
+        - best is inert attr, stays visible but hides el and all contents
+        - can put 'inert' on all other landmarks apart  
+        - hide focus of background elements
+
+        4. have a close button & focus it on open
+        - on close, move focus back to opening
+
+        5. focus moving is confusing, contents need a role, 
+        - either group or dialog 
+        depending on what we do with focus, need to either
+        - focus trap - dialog 
+        - close when tab out - group 
+        - just listen to tab key and control focus
+      </pre>
+    </article>
+  </body>
+</html>

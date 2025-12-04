@@ -1,0 +1,140 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <nav>
+      <a href="/focus">next</a>
+    </nav>
+    <main>
+
+      <h1>Aria-live</h1>
+
+      <pre>
+        live regio are announced ONCE 
+        thus live ~= toast 
+        toasts expire, live is transient
+
+        thus should not be used as alternative to persistent approaches
+      </pre>
+
+      <h2>aria-live</h2>
+      <pre>
+        - assertive
+        updates that require immediate attention
+         error notifications, session timeouts, security alerts 
+
+        - polite 
+        wait until user is idle , pauses typing or is finished reading current sentence
+        success messages, chat log, loading indicators
+        
+        - off 
+        do not read 
+      </pre>
+      <pre>
+        place the live region in the DOM as soon as possible, then update with the status message to make announcement
+
+        style with 
+        [aria-live]:not(:empty) { ... } 
+      </pre>
+      <pre>
+        but browser + SR support is inconsistent : (
+        - aria-relevant
+        announce on 'add remove' of text 
+
+        - aria-atomic = [true/false]
+        what is contained in announcement, all or only changes 
+        - aria-busy 
+      </pre>
+
+      <pre>
+        aria-live retains aria-role of element it is on 
+
+        but there are aria roles for live regions : 
+
+        # good support 
+        - alert 
+        important and time-sensitive 
+
+        - status 
+        advisory information, but not important enough for alert, 
+        status bar / success message 
+
+        # poor / no support / might be deprecated 
+        - log
+        new info added in meaningful order, old may disappear
+
+        - marquee 
+        non-essential info changes frequently
+
+        - timer 
+        a numerical counter 
+
+        these all have implicit aria-live and aria-atomic attributes 
+
+        # difference
+        region roles have semantic meaning ,
+        SR may announce "alert" before reading message 
+        may have an accessible name 
+      </pre>
+
+      <pre>
+        &lt;output&gt;
+        maps to role="status" (polite)
+        can be given name w label 
+
+        not consistently announced accross Browser + SR 
+        safari : 
+        doesnt announce the name 
+        always announces initial name first ... 
+
+      </pre>
+
+      <h2>practical</h2>
+      <pre>
+        live regions shouldnt have interactive elements inside, live flattens all text 
+
+        on enter, move focus to results heading is nice 
+
+        great if just show a message "results will update as you type" w aria-describedby 
+        then we dont need live 
+
+        but no results should be aria alert, SR users should know immediately query returns nothing 
+
+        # focus 
+        generally DONT put interactive elements in aria live
+        if it has then shouldnt be live, and shouldnt be toast 
+        move the user focus there instead and make if persistent 
+
+        live roles are short messages that do not require moving user focus 
+        shouldnt have to close a toast,
+        if it requires closing then use 'alertdialog' 
+        = 'alert+dialog' roles 
+
+        focus should be moved immediately on user action 
+      </pre>
+
+      <h2>best practice </h2>
+      <pre>
+        - insert live region as early as possible so acc tree finds it 
+        - hide with 'visually-hidden' , dont remove from acc tree 
+        - limit no of live regions :
+        - one assertive and one polite : and insert messages with js 
+        - concise - keep as short as possible
+        - only text 
+        - empty live regions in between updates 
+        - nerderegion - browser extension for live reg 
+      </pre>
+    </main>
+
+
+  </body>
+</html>
